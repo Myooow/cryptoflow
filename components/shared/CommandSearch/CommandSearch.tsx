@@ -36,12 +36,16 @@ export function CommandSearch() {
       return;
     }
 
+    const controller = new AbortController();
     setLoading(true);
-    fetch(`/api/search?q=${encodeURIComponent(debouncedQuery)}`)
+
+    fetch(`/api/search?q=${encodeURIComponent(debouncedQuery)}`, { signal: controller.signal })
       .then((res) => res.json())
       .then((data: SearchResult[]) => setResults(data))
-      .catch(() => setResults([]))
+      .catch((err: unknown) => { if ((err as { name?: string }).name !== "AbortError") setResults([]); })
       .finally(() => setLoading(false));
+
+    return () => controller.abort();
   }, [debouncedQuery]);
 
   function handleSelect(id: string) {

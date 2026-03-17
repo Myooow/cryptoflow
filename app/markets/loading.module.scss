@@ -1,6 +1,8 @@
 @use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
 
+@reference "../globals.scss";
+
 .wrapper {
   display: flex;
   flex-direction: column;

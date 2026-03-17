@@ -1,6 +1,8 @@
 @use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
 
+@reference "../globals.scss";
+
 .page {
   display: flex;
   flex-direction: column;

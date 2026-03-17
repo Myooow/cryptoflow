@@ -1,6 +1,8 @@
 @use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
 
+@reference "../../../app/globals.scss";
+
 .wrapper {
   @include surface-card;
   display: flex;

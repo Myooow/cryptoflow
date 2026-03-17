@@ -1,6 +1,8 @@
 @use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
 
+@reference "./globals.scss";
+
 .wrapper {
   padding: 1rem 0;
 }
