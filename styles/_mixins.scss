@@ -1,0 +1,55 @@
+@use "variables" as *;
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == "sm" {
+    @media (min-width: 640px) { @content; }
+  } @else if $breakpoint == "md" {
+    @media (min-width: 768px) { @content; }
+  } @else if $breakpoint == "lg" {
+    @media (min-width: 1024px) { @content; }
+  } @else if $breakpoint == "xl" {
+    @media (min-width: 1280px) { @content; }
+  } @else if $breakpoint == "2xl" {
+    @media (min-width: 1536px) { @content; }
+  }
+}
+
+@mixin flex-center {
+  @apply flex items-center justify-center;
+}
+
+@mixin flex-between {
+  @apply flex items-center justify-between;
+}
+
+@mixin surface-card {
+  @apply bg-surface border border-border-subtle rounded-lg;
+}
+
+@mixin surface-elevated {
+  @apply bg-surface-elevated border border-border rounded-lg;
+}
+
+@mixin text-mono {
+  font-family: $font-mono;
+  font-variant-numeric: tabular-nums;
+}
+
+@mixin price-up {
+  @apply text-accent-green;
+}
+
+@mixin price-down {
+  @apply text-accent-red;
+}
+
+@mixin truncate {
+  @apply overflow-hidden text-ellipsis whitespace-nowrap;
+}
+
+@mixin glass-effect {
+  background: rgba($color-surface, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba($color-border, 0.5);
+}

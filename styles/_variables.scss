@@ -1,0 +1,19 @@
+$color-surface: #0a1628;
+$color-border: #1e3a5f;
+
+$font-sans: var(--font-geist-sans), system-ui, sans-serif;
+$font-mono: var(--font-geist-mono), "Courier New", monospace;
+
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+
+$transition-fast: 150ms ease;
+$transition-base: 250ms ease;
+$transition-slow: 400ms ease;
+
+$z-header: 100;
+$z-overlay: 200;
+$z-modal: 300;
+$z-tooltip: 400;
