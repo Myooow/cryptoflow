@@ -42,9 +42,9 @@ function toChartCandle(candle: OhlcCandle & { volume?: number }): ChartCandle {
   };
 }
 
-function formatTimestamp(timestamp: number, interval: KlineInterval): string {
+function formatTimestamp(timestamp: number, selectedInterval: KlineInterval): string {
   const date = new Date(timestamp);
-  if (interval === "1d" || interval === "3d" || interval === "1w" || interval === "1M") {
+  if (selectedInterval === "1d" || selectedInterval === "3d" || selectedInterval === "1w" || selectedInterval === "1M") {
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
   }
   return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false });
@@ -79,10 +79,10 @@ function CandleTooltip({ active, payload }: CandleTooltipProps) {
 }
 
 export function CandlestickChart({ coingeckoId, initialCandles }: CandlestickChartProps) {
-  const [interval, setInterval] = useState<KlineInterval>(DEFAULT_KLINE_INTERVAL);
+  const [selectedInterval, setSelectedInterval] = useState<KlineInterval>(DEFAULT_KLINE_INTERVAL);
   const [candles, setCandles] = useState<ChartCandle[]>(initialCandles.map(toChartCandle));
 
-  const { kline } = useBinanceKline({ coingeckoId, interval });
+  const { kline } = useBinanceKline({ coingeckoId, interval: selectedInterval });
 
   useEffect(() => {
     if (!kline) return;
@@ -113,7 +113,7 @@ export function CandlestickChart({ coingeckoId, initialCandles }: CandlestickCha
 
   useEffect(() => {
     setCandles(initialCandles.map(toChartCandle));
-  }, [interval, initialCandles]);
+  }, [selectedInterval, initialCandles]);
 
   const prices = candles.flatMap((c) => [c.high, c.low]);
   const minPrice = Math.min(...prices) * 0.999;
@@ -125,8 +125,8 @@ export function CandlestickChart({ coingeckoId, initialCandles }: CandlestickCha
         {KLINE_INTERVALS.map(({ label, value }) => (
           <button
             key={value}
-            className={`${styles.intervalBtn} ${interval === value ? styles.active : ""}`}
-            onClick={() => setInterval(value)}
+            className={`${styles.intervalBtn} ${selectedInterval === value ? styles.active : ""}`}
+            onClick={() => setSelectedInterval(value)}
           >
             {label}
           </button>
@@ -138,7 +138,7 @@ export function CandlestickChart({ coingeckoId, initialCandles }: CandlestickCha
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-subtle)" vertical={false} />
           <XAxis
             dataKey="timestamp"
-            tickFormatter={(v: number) => formatTimestamp(v, interval)}
+            tickFormatter={(v: number) => formatTimestamp(v, selectedInterval)}
             tick={{ fill: "var(--color-text-muted)", fontSize: 11 }}
             axisLine={{ stroke: "var(--color-border-subtle)" }}
             tickLine={false}

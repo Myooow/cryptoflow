@@ -13,6 +13,9 @@ const cspHeader = [
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  experimental: {
+    cacheComponents: true,
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "assets.coingecko.com" },

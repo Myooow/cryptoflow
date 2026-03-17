@@ -1,6 +1,8 @@
 @use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
 
+@reference "../../../app/globals.scss";
+
 .header {
   position: fixed;
   top: 0;

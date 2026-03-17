@@ -1,5 +1,7 @@
 @use "@/styles/variables" as *;
 
+@reference "./globals.scss";
+
 .body {
   padding-top: 56px;
 }

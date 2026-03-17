@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { getTokenDetail, getOhlc } from "@/lib/api/coingecko";
 import { isSupportedOnBinance } from "@/lib/api/mapper";
 import { PriceTicker } from "@/components/shared/PriceTicker";
@@ -10,6 +11,14 @@ import styles from "./page.module.scss";
 
 interface TokenPageProps {
   params: Promise<{ id: string }>;
+}
+
+function sanitizeDescription(html: string): string {
+  return html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/\son\w+="[^"]*"/gi, "")
+    .replace(/\son\w+='[^']*'/gi, "")
+    .replace(/javascript:/gi, "");
 }
 
 export async function generateMetadata({ params }: TokenPageProps) {
@@ -40,8 +49,13 @@ export default async function TokenPage({ params }: TokenPageProps) {
       <div className={styles.header}>
         <div className={styles.tokenIdentity}>
           {token.image && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={token.image} alt={token.name} className={styles.tokenImage} />
+            <Image
+              src={token.image}
+              alt={token.name}
+              width={48}
+              height={48}
+              className={styles.tokenImage}
+            />
           )}
           <div className={styles.tokenNames}>
             <h1 className={styles.tokenName}>{token.name}</h1>
@@ -64,7 +78,7 @@ export default async function TokenPage({ params }: TokenPageProps) {
               <h2 className={styles.descriptionTitle}>About {token.name}</h2>
               <p
                 className={styles.descriptionText}
-                dangerouslySetInnerHTML={{ __html: token.description }}
+                dangerouslySetInnerHTML={{ __html: sanitizeDescription(token.description) }}
               />
             </div>
           )}
