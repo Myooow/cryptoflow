@@ -1,0 +1,94 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.header {
+  @include flex-between;
+}
+
+.identity {
+  @include flex-center;
+  gap: 0.875rem;
+}
+
+.image {
+  @apply bg-surface-elevated;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.names {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.skeletonName {
+  @apply bg-surface-elevated;
+  height: 28px;
+  width: 160px;
+  border-radius: $border-radius-md;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeletonSymbol {
+  @apply bg-surface-elevated;
+  height: 16px;
+  width: 60px;
+  border-radius: $border-radius-sm;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeletonPrice {
+  @apply bg-surface-elevated;
+  height: 40px;
+  width: 200px;
+  border-radius: $border-radius-md;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @include respond-to("xl") {
+    grid-template-columns: 1fr 320px;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skeletonChart {
+  @include surface-card;
+  height: 420px;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeletonStats {
+  @include surface-card;
+  height: 200px;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeletonSidebar {
+  @include surface-card;
+  height: 600px;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}

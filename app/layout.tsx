@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Header } from "@/components/shared/Header";
+import { CommandSearch } from "@/components/shared/CommandSearch";
 import "./globals.scss";
+import styles from "./layout.module.scss";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +16,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CryptoFlow",
+  title: {
+    default: "CryptoFlow",
+    template: "%s | CryptoFlow",
+  },
   description: "Terminal d'analyse crypto en temps réel",
 };
 
@@ -24,7 +30,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body className={styles.body}>
+        <Header />
+        <CommandSearch />
+        <main className={styles.main}>{children}</main>
+      </body>
     </html>
   );
 }

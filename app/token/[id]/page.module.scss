@@ -1,0 +1,102 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.header {
+  @include flex-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.tokenIdentity {
+  @include flex-center;
+  gap: 0.875rem;
+}
+
+.tokenImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.tokenNames {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.tokenName {
+  @apply text-text-primary text-2xl font-bold;
+}
+
+.tokenSymbol {
+  @apply text-text-secondary text-sm;
+  @include text-mono;
+}
+
+.priceSkeleton {
+  @apply bg-surface-elevated;
+  height: 40px;
+  width: 200px;
+  border-radius: $border-radius-md;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+
+  @include respond-to("xl") {
+    grid-template-columns: 1fr 320px;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebar {
+  height: 600px;
+  position: sticky;
+  top: calc(56px + 2rem);
+}
+
+.description {
+  @include surface-card;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.descriptionTitle {
+  @apply text-text-primary text-base font-semibold;
+}
+
+.descriptionText {
+  @apply text-text-secondary text-sm;
+  line-height: 1.7;
+
+  & a {
+    @apply text-accent-blue;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
