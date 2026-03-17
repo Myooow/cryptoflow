@@ -1,0 +1,46 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.title {
+  @apply text-text-primary text-2xl font-bold;
+}
+
+.subtitle {
+  @apply text-text-secondary text-sm;
+}
+
+.pagination {
+  @include flex-center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.pageBtn {
+  @apply text-text-secondary text-sm bg-surface border border-border-subtle;
+  @include text-mono;
+  padding: 0.5rem 1rem;
+  border-radius: $border-radius-md;
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  &:hover {
+    @apply text-text-primary border-border;
+  }
+}
+
+.pageInfo {
+  @apply text-text-muted text-sm;
+  @include text-mono;
+}

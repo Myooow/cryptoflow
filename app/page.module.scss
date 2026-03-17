@@ -1,0 +1,69 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sectionTitle {
+  @apply text-text-primary text-xl font-semibold;
+}
+
+.trendingGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  @include respond-to("md") {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include respond-to("lg") {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include respond-to("xl") {
+    grid-template-columns: repeat(7, 1fr);
+  }
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  @include respond-to("md") {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include respond-to("lg") {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.skeletonTitle {
+  @apply bg-surface-elevated;
+  height: 28px;
+  width: 160px;
+  border-radius: $border-radius-md;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeletonCard {
+  @include surface-card;
+  height: 160px;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}

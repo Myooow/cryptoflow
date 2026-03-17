@@ -1,0 +1,50 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeletonTitle {
+  @apply bg-surface-elevated;
+  height: 32px;
+  width: 120px;
+  border-radius: $border-radius-md;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeletonSubtitle {
+  @apply bg-surface-elevated;
+  height: 16px;
+  width: 240px;
+  border-radius: $border-radius-sm;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.table {
+  @include surface-card;
+  overflow: hidden;
+}
+
+.row {
+  height: 56px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  animation: shimmer 1.5s ease-in-out infinite;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
