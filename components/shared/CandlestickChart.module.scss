@@ -1,0 +1,61 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.wrapper {
+  @include surface-card;
+  padding: 1rem;
+}
+
+.controls {
+  @include flex-center;
+  justify-content: flex-start;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.intervalBtn {
+  @apply text-text-muted text-xs font-medium;
+  @include text-mono;
+  padding: 0.25rem 0.625rem;
+  border-radius: $border-radius-sm;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    @apply text-text-primary bg-surface-elevated;
+  }
+
+  &.active {
+    @apply text-accent-blue border-accent-blue bg-surface-elevated;
+  }
+}
+
+.tooltip {
+  @include surface-elevated;
+  padding: 0.75rem;
+  min-width: 120px;
+}
+
+.tooltipRow {
+  @include flex-between;
+  gap: 1rem;
+
+  & > span {
+    @apply text-text-secondary text-xs;
+    @include text-mono;
+  }
+
+  & > span:last-child {
+    @apply text-text-primary;
+  }
+}
+
+.tooltipUp {
+  @apply text-accent-green;
+}
+
+.tooltipDown {
+  @apply text-accent-red;
+}

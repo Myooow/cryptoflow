@@ -1,0 +1,114 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.thead {
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.th {
+  @apply text-text-muted text-xs font-medium;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  white-space: nowrap;
+
+  &.right {
+    text-align: right;
+  }
+}
+
+.row {
+  border-bottom: 1px solid var(--color-border-subtle);
+  transition: background-color $transition-fast;
+
+  &:hover {
+    @apply bg-surface;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.td {
+  @apply text-text-primary text-sm;
+  padding: 0.875rem 1rem;
+  white-space: nowrap;
+
+  &.right {
+    text-align: right;
+  }
+}
+
+.rank {
+  @apply text-text-muted text-xs;
+  @include text-mono;
+  width: 48px;
+}
+
+.nameCell {
+  @include flex-center;
+  justify-content: flex-start;
+  gap: 0.625rem;
+  text-decoration: none;
+
+  &:hover .tokenName {
+    @apply text-accent-blue;
+  }
+}
+
+.logo {
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tokenName {
+  @apply text-text-primary text-sm font-medium;
+  transition: color $transition-fast;
+}
+
+.tokenSymbol {
+  @apply text-text-muted text-xs;
+  @include text-mono;
+}
+
+.price {
+  @include text-mono;
+  font-weight: 500;
+}
+
+.change {
+  @apply text-xs font-medium;
+  @include text-mono;
+
+  &.up {
+    @apply text-accent-green;
+  }
+
+  &.down {
+    @apply text-accent-red;
+  }
+}
+
+.mono {
+  @include text-mono;
+  @apply text-text-secondary;
+}
+
+.na {
+  @apply text-text-muted;
+}
