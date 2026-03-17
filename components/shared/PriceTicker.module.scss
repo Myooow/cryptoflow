@@ -1,0 +1,54 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.wrapper {
+  @include flex-center;
+  gap: 0.75rem;
+}
+
+.price {
+  @include text-mono;
+  @apply text-text-primary text-2xl font-semibold;
+}
+
+.change {
+  @include text-mono;
+  @apply text-sm font-medium;
+  padding: 0.2rem 0.5rem;
+  border-radius: $border-radius-sm;
+
+  &.up {
+    @apply text-accent-green bg-accent-green-dim;
+  }
+
+  &.down {
+    @apply text-accent-red bg-accent-red-dim;
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &.connected {
+    @apply bg-accent-green;
+    box-shadow: 0 0 6px var(--color-accent-green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  &.connecting {
+    @apply bg-accent-yellow;
+  }
+
+  &.disconnected,
+  &.error {
+    @apply bg-text-muted;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
