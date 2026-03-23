@@ -1,44 +1,49 @@
-@use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
-
-@reference "../../../app/globals.scss";
+@use "@/styles/variables" as *;
 
 .wrapper {
-  width: 100%;
-  overflow-x: auto;
-
-  &::-webkit-scrollbar {
-    height: 4px;
-  }
+  background-color: var(--dark-500);
+  border-radius: $border-radius-xl;
+  overflow: hidden;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 800px;
 }
 
-.thead {
-  border-bottom: 1px solid var(--color-border-subtle);
+.headerRow {
+  background-color: var(--dark-400);
 }
 
 .th {
-  @apply text-text-muted text-xs font-medium;
-  padding: 0.75rem 1rem;
+  padding: 16px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--purple-100);
   text-align: left;
-  white-space: nowrap;
 
-  &.right {
-    text-align: right;
+  &:first-child {
+    padding-left: 20px;
+  }
+
+  &:last-child {
+    padding-right: 20px;
   }
 }
 
+.rankTh {
+  max-width: 60px;
+  color: var(--purple-100);
+}
+
 .row {
-  border-bottom: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid rgba($color-purple-600, 0.1);
+  position: relative;
   transition: background-color $transition-fast;
 
   &:hover {
-    @apply bg-surface;
+    background-color: rgba($color-dark-400, 0.3);
   }
 
   &:last-child {
@@ -46,71 +51,101 @@
   }
 }
 
-.td {
-  @apply text-text-primary text-sm;
-  padding: 0.875rem 1rem;
-  white-space: nowrap;
+.rowLink {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
 
-  &.right {
-    text-align: right;
+.td {
+  padding: 16px 8px;
+  font-size: 14px;
+
+  &:first-child {
+    padding-left: 20px;
   }
+
+  &:last-child {
+    padding-right: 20px;
+  }
+}
+
+.rankTd {
+  color: var(--purple-100);
+  font-weight: 500;
+  max-width: 60px;
 }
 
 .rank {
-  @apply text-text-muted text-xs;
-  @include text-mono;
-  width: 48px;
+  position: relative;
+  z-index: 2;
 }
 
-.nameCell {
-  @include flex-center;
-  justify-content: flex-start;
-  gap: 0.625rem;
-  text-decoration: none;
-
-  &:hover .tokenName {
-    @apply text-accent-blue;
-  }
+.tokenInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
 }
 
-.logo {
+.tokenImage {
   border-radius: 50%;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
 }
 
 .tokenName {
-  @apply text-text-primary text-sm font-medium;
-  transition: color $transition-fast;
+  font-weight: 600;
+  font-size: 14px;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tokenSymbol {
-  @apply text-text-muted text-xs;
-  @include text-mono;
+  font-size: 12px;
+  color: var(--purple-100);
+  text-transform: uppercase;
 }
 
-.price {
-  @include text-mono;
+.priceCell {
   font-weight: 500;
 }
 
 .change {
-  @apply text-xs font-medium;
-  @include text-mono;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  font-size: 13px;
+}
 
-  &.up {
-    @apply text-accent-green;
-  }
+.up {
+  color: var(--green-500);
+}
 
-  &.down {
-    @apply text-accent-red;
+.down {
+  color: var(--red-500);
+}
+
+.hiddenSm {
+  @media (max-width: 640px) {
+    display: none;
   }
 }
 
-.mono {
-  @include text-mono;
-  @apply text-text-secondary;
+.hiddenMd {
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
-.na {
-  @apply text-text-muted;
+.volumeTh,
+.volumeTd {
+  @media (max-width: 480px) {
+    display: none;
+  }
 }

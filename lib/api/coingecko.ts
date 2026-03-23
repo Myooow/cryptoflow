@@ -4,7 +4,6 @@ import { config } from "@/lib/config";
 import {
   COINGECKO_BASE_URL,
   COINGECKO_MARKETS_PER_PAGE,
-  CACHE_PROFILES,
   DEFAULT_CURRENCY,
 } from "@/lib/constants";
 import type { Token, TokenDetail, TrendingToken, OhlcCandle } from "@/types/token";
@@ -25,7 +24,9 @@ async function fetchCoinGecko<T>(endpoint: string, params?: Record<string, strin
   });
 
   if (!response.ok) {
-    throw new Error(`CoinGecko API error: ${response.status} ${response.statusText} — ${url.pathname}`);
+    const error = new Error(`CoinGecko API error: ${response.status} ${response.statusText} — ${url.pathname}`);
+    (error as Error & { status: number }).status = response.status;
+    throw error;
   }
 
   return response.json() as Promise<T>;

@@ -1,44 +1,35 @@
-import Link from "next/link";
 import Image from "next/image";
 import { formatLargeNumber, formatPercent } from "@/lib/utils";
 import type { MarketCategory } from "@/types/market";
 import styles from "./CategoryCard.module.scss";
+import { TrendingUp, TrendingDown } from "lucide-react";
 
 interface CategoryCardProps {
   category: MarketCategory;
 }
 
 export function CategoryCard({ category }: CategoryCardProps) {
-  const isUp = (category.marketCapChange24h ?? 0) >= 0;
+  const change = category.marketCapChange24h;
+  const isUp = change == null || change >= 0;
 
   return (
-    <Link href={`/markets?category=${category.id}`} className={styles.card}>
-      <div className={styles.top}>
-        <div className={styles.coins}>
-          {category.top3Coins.slice(0, 3).map((src, i) => (
-            <Image
-              key={i}
-              src={src}
-              alt=""
-              width={24}
-              height={24}
-              className={styles.coin}
-              style={{ zIndex: 3 - i }}
-              unoptimized
-            />
+    <tr className={styles.row}>
+      <td className={styles.nameCell}>{category.name}</td>
+      <td className={styles.gainersCell}>
+        <div className={styles.gainers}>
+          {category.top3Coins.slice(0, 3).map((url, i) => (
+            <Image key={i} src={url} alt="coin" width={28} height={28} className={styles.coinImage} />
           ))}
         </div>
-        {category.marketCapChange24h !== null && (
-          <span className={`${styles.change} ${isUp ? styles.up : styles.down}`}>
-            {formatPercent(category.marketCapChange24h)}
-          </span>
-        )}
-      </div>
-
-      <div className={styles.bottom}>
-        <span className={styles.name}>{category.name}</span>
-        <span className={styles.marketCap}>{formatLargeNumber(category.marketCap)}</span>
-      </div>
-    </Link>
+      </td>
+      <td className={styles.changeCell}>
+        <span className={`${styles.change} ${isUp ? styles.up : styles.down}`}>
+          {isUp ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+          {formatPercent(change)}
+        </span>
+      </td>
+      <td className={styles.marketCapCell}>{formatLargeNumber(category.marketCap)}</td>
+      <td className={styles.volumeCell}>{formatLargeNumber(category.volume24h)}</td>
+    </tr>
   );
 }

@@ -22,16 +22,29 @@ export const KLINE_INTERVALS: { label: string; value: KlineInterval }[] = [
   { label: "1w", value: "1w" },
 ];
 
+export const PERIOD_BUTTONS: { label: string; days: number }[] = [
+  { label: "1D", days: 1 },
+  { label: "1W", days: 7 },
+  { label: "1M", days: 30 },
+  { label: "3M", days: 90 },
+  { label: "6M", days: 180 },
+  { label: "1Y", days: 365 },
+];
+
+export const CHART_COLORS = {
+  background: "#0b1116",
+  text: "#8f9fb1",
+  grid: "#1a2332",
+  border: "#1a2332",
+  crosshairV: "#ffffff40",
+  crosshairH: "#ffffff20",
+  candleUp: "#158A6E",
+  candleDown: "#EB1C36",
+} as const;
+
 export const WEBSOCKET_RECONNECT_DELAY = 3000;
 export const WEBSOCKET_MAX_RETRIES = 5;
 export const WEBSOCKET_PING_INTERVAL = 30000;
 
 export const LIVE_TRADES_MAX_ITEMS = 50;
 
-export const CACHE_PROFILES = {
-  trending: 300,
-  markets: 60,
-  tokenDetail: 300,
-  categories: 600,
-  ohlc: 300,
-} as const;

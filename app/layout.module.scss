@@ -1,14 +1,16 @@
-@use "@/styles/variables" as *;
-
-@reference "./globals.scss";
-
-.body {
-  padding-top: 56px;
-}
+@use "@/styles/mixins" as *;
 
 .main {
-  min-height: calc(100dvh - 56px);
-  max-width: 1440px;
+  padding: 24px 16px 48px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  max-width: 1440px;
+  width: 100%;
+
+  @include respond-to("sm") {
+    padding: 24px 24px 48px;
+  }
+
+  @include respond-to("md") {
+    padding: 48px 24px 64px;
+  }
 }

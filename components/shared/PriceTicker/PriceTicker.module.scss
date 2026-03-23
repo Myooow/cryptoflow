@@ -1,31 +1,48 @@
-@use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
-
-@reference "../../../app/globals.scss";
+@use "@/styles/variables" as *;
 
 .wrapper {
-  @include flex-center;
-  gap: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .price {
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   @include text-mono;
-  @apply text-text-primary text-2xl font-semibold;
+
+  @include respond-to("sm") {
+    font-size: 48px;
+  }
+
+  @include respond-to("xl") {
+    font-size: 56px;
+  }
 }
 
-.change {
-  @include text-mono;
-  @apply text-sm font-medium;
-  padding: 0.2rem 0.5rem;
-  border-radius: $border-radius-sm;
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 4px;
+  height: fit-content;
+}
 
-  &.up {
-    @apply text-accent-green bg-accent-green-dim;
-  }
+.up {
+  background-color: rgba(118, 218, 68, 0.15);
+  color: var(--green-500);
+}
 
-  &.down {
-    @apply text-accent-red bg-accent-red-dim;
-  }
+.down {
+  background-color: rgba(255, 104, 95, 0.15);
+  color: var(--red-500);
 }
 
 .dot {
@@ -34,23 +51,12 @@
   border-radius: 50%;
   flex-shrink: 0;
 
-  &.connected {
-    @apply bg-accent-green;
-    box-shadow: 0 0 6px var(--color-accent-green);
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  &.connecting {
-    @apply bg-accent-yellow;
-  }
-
-  &.disconnected,
-  &.error {
-    @apply bg-text-muted;
-  }
+  &.connected { background-color: var(--green-500); }
+  &.connecting { background-color: var(--yellow-500); animation: blink 1s infinite; }
+  &.disconnected, &.error { background-color: var(--red-500); }
 }
 
-@keyframes pulse {
+@keyframes blink {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.3; }
 }

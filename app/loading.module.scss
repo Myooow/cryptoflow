@@ -1,33 +1,43 @@
-@use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
+@use "@/styles/variables" as *;
 
-@reference "./globals.scss";
-
-.wrapper {
-  padding: 1rem 0;
+.page {
+  width: 100%;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  animation: pulse 1.5s ease-in-out infinite;
 
-  @include respond-to("md") {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @include respond-to("xl") {
-    grid-template-columns: repeat(4, 1fr);
+  @include respond-to("lg") {
+    grid-template-columns: 1fr 2fr;
   }
 }
 
-.skeleton {
-  @include surface-card;
-  height: 160px;
-  animation: shimmer 1.5s ease-in-out infinite;
+.card {
+  background-color: var(--dark-500);
+  border-radius: $border-radius-xl;
+  overflow: hidden;
+  padding-top: 32px;
 }
 
-@keyframes shimmer {
+.title {
+  height: 24px;
+  width: 180px;
+  background-color: var(--dark-400);
+  border-radius: $border-radius-sm;
+  margin: 0 20px 20px;
+}
+
+.row {
+  height: 52px;
+  border-bottom: 1px solid rgba($color-purple-600, 0.1);
+  background-color: rgba($color-dark-400, 0.3);
+}
+
+@keyframes pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.5; }
 }

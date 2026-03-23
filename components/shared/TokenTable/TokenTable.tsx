@@ -1,10 +1,9 @@
-"use client";
-
-import Link from "next/link";
 import Image from "next/image";
-import { formatPrice, formatLargeNumber, formatPercent } from "@/lib/utils";
+import Link from "next/link";
+import { formatLargeNumber, formatPercent, formatPrice } from "@/lib/utils";
 import type { Token } from "@/types/token";
 import styles from "./TokenTable.module.scss";
+import { TrendingUp, TrendingDown } from "lucide-react";
 
 interface TokenTableProps {
   tokens: Token[];
@@ -14,15 +13,15 @@ export function TokenTable({ tokens }: TokenTableProps) {
   return (
     <div className={styles.wrapper}>
       <table className={styles.table}>
-        <thead className={styles.thead}>
-          <tr>
-            <th className={styles.th}>#</th>
+        <thead>
+          <tr className={styles.headerRow}>
+            <th className={`${styles.th} ${styles.rankTh}`}>#</th>
             <th className={styles.th}>Name</th>
-            <th className={`${styles.th} ${styles.right}`}>Price</th>
-            <th className={`${styles.th} ${styles.right}`}>24h %</th>
-            <th className={`${styles.th} ${styles.right}`}>7d %</th>
-            <th className={`${styles.th} ${styles.right}`}>Market Cap</th>
-            <th className={`${styles.th} ${styles.right}`}>Volume 24h</th>
+            <th className={styles.th}>Price</th>
+            <th className={styles.th}>24h %</th>
+            <th className={`${styles.th} ${styles.hiddenSm}`}>7d %</th>
+            <th className={`${styles.th} ${styles.hiddenMd}`}>Market Cap</th>
+            <th className={`${styles.th} ${styles.volumeTh}`}>Volume 24h</th>
           </tr>
         </thead>
         <tbody>
@@ -36,42 +35,40 @@ export function TokenTable({ tokens }: TokenTableProps) {
 }
 
 function TokenRow({ token }: { token: Token }) {
-  const is24hUp = token.priceChangePercentage24h >= 0;
-  const is7dUp = (token.priceChangePercentage7d ?? 0) >= 0;
+  const change24h = token.priceChangePercentage24h;
+  const change7d = token.priceChangePercentage7d;
+  const isUp24h = change24h >= 0;
+  const isUp7d = change7d == null || change7d >= 0;
 
   return (
     <tr className={styles.row}>
-      <td className={`${styles.td} ${styles.rank}`}>{token.marketCapRank}</td>
+      <td className={`${styles.td} ${styles.rankTd}`}>
+        <Link href={`/token/${token.id}`} className={styles.rowLink} />
+        <span className={styles.rank}>{token.marketCapRank}</span>
+      </td>
       <td className={styles.td}>
-        <Link href={`/token/${token.id}`} className={styles.nameCell}>
-          <Image src={token.image} alt={token.name} width={28} height={28} className={styles.logo} />
-          <span className={styles.tokenName}>{token.name}</span>
-          <span className={styles.tokenSymbol}>{token.symbol.toUpperCase()}</span>
-        </Link>
+        <div className={styles.tokenInfo}>
+          <Image src={token.image} alt={token.name} width={32} height={32} className={styles.tokenImage} />
+          <div>
+            <p className={styles.tokenName}>{token.name}</p>
+            <p className={styles.tokenSymbol}>{token.symbol.toUpperCase()}</p>
+          </div>
+        </div>
       </td>
-      <td className={`${styles.td} ${styles.right} ${styles.price}`}>
-        ${formatPrice(token.currentPrice)}
-      </td>
-      <td className={`${styles.td} ${styles.right}`}>
-        <span className={`${styles.change} ${is24hUp ? styles.up : styles.down}`}>
-          {formatPercent(token.priceChangePercentage24h)}
+      <td className={`${styles.td} ${styles.priceCell}`}>${formatPrice(token.currentPrice)}</td>
+      <td className={styles.td}>
+        <span className={`${styles.change} ${isUp24h ? styles.up : styles.down}`}>
+          {isUp24h ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+          {formatPercent(change24h)}
         </span>
       </td>
-      <td className={`${styles.td} ${styles.right}`}>
-        {token.priceChangePercentage7d !== null ? (
-          <span className={`${styles.change} ${is7dUp ? styles.up : styles.down}`}>
-            {formatPercent(token.priceChangePercentage7d)}
-          </span>
-        ) : (
-          <span className={styles.na}>—</span>
-        )}
+      <td className={`${styles.td} ${styles.hiddenSm}`}>
+        <span className={`${styles.change} ${isUp7d ? styles.up : styles.down}`}>
+          {formatPercent(change7d)}
+        </span>
       </td>
-      <td className={`${styles.td} ${styles.right} ${styles.mono}`}>
-        {formatLargeNumber(token.marketCap)}
-      </td>
-      <td className={`${styles.td} ${styles.right} ${styles.mono}`}>
-        {formatLargeNumber(token.totalVolume)}
-      </td>
+      <td className={`${styles.td} ${styles.hiddenMd}`}>{formatLargeNumber(token.marketCap)}</td>
+      <td className={`${styles.td} ${styles.volumeTd}`}>{formatLargeNumber(token.totalVolume)}</td>
     </tr>
   );
 }

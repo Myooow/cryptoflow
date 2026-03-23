@@ -1,71 +1,84 @@
-@use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
-
-@reference "./globals.scss";
+@use "@/styles/variables" as *;
 
 .page {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
+  width: 100%;
 }
 
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  @include respond-to("lg") {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+.trendingCard {
+  background-color: var(--dark-500);
+  border-radius: $border-radius-xl;
+  overflow: hidden;
+  padding-top: 32px;
+}
+
+.categoriesCard {
+  background-color: var(--dark-500);
+  border-radius: $border-radius-xl;
+  overflow: hidden;
+  padding-top: 32px;
 }
 
 .sectionTitle {
-  @apply text-text-primary text-xl font-semibold;
-}
-
-.trendingGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  padding: 0 20px;
 
   @include respond-to("md") {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @include respond-to("lg") {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @include respond-to("xl") {
-    grid-template-columns: repeat(7, 1fr);
+    font-size: 24px;
   }
 }
 
-.categoryGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-  @include respond-to("md") {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.tableHeaderRow {
+  background-color: var(--dark-400);
+}
 
-  @include respond-to("lg") {
-    grid-template-columns: repeat(5, 1fr);
-  }
+.tableHeader {
+  padding: 12px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--purple-100);
+  text-align: left;
+
+  &:first-child { padding-left: 20px; }
+  &:last-child { padding-right: 20px; }
+}
+
+.skeleton {
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
 .skeletonTitle {
-  @apply bg-surface-elevated;
-  height: 28px;
-  width: 160px;
-  border-radius: $border-radius-md;
-  animation: shimmer 1.5s ease-in-out infinite;
+  height: 24px;
+  width: 180px;
+  background-color: var(--dark-400);
+  border-radius: $border-radius-sm;
+  margin: 0 20px 20px;
 }
 
-.skeletonCard {
-  @include surface-card;
-  height: 160px;
-  animation: shimmer 1.5s ease-in-out infinite;
+.skeletonRow {
+  height: 52px;
+  border-bottom: 1px solid rgba($color-purple-600, 0.1);
+  background-color: rgba($color-dark-400, 0.3);
 }
 
-@keyframes shimmer {
+@keyframes pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.5; }
 }

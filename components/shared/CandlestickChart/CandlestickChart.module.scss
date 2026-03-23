@@ -1,63 +1,68 @@
-@use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
-
-@reference "../../../app/globals.scss";
+@use "@/styles/variables" as *;
 
 .wrapper {
-  @include surface-card;
-  padding: 1rem;
+  background-color: var(--dark-500);
+  border-radius: $border-radius-lg;
+  padding: 12px;
+  margin-top: 20px;
 }
 
 .controls {
-  @include flex-center;
-  justify-content: flex-start;
-  gap: 0.25rem;
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  @include respond-to("xl") {
+    flex-direction: row;
+    align-items: center;
+  }
 }
 
-.intervalBtn {
-  @apply text-text-muted text-xs font-medium;
-  @include text-mono;
-  padding: 0.25rem 0.625rem;
-  border-radius: $border-radius-sm;
-  border: 1px solid transparent;
+.controlsLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(163, 174, 208, 0.5);
+  margin-right: 8px;
+}
+
+.buttons {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--purple-100);
   background: transparent;
+  border: none;
+  border-radius: $border-radius-sm;
   cursor: pointer;
-  transition: all $transition-fast;
+  transition: background-color $transition-fast, color $transition-fast;
 
   &:hover {
-    @apply text-text-primary bg-surface-elevated;
-  }
-
-  &.active {
-    @apply text-accent-blue border-accent-blue bg-surface-elevated;
+    background-color: var(--dark-400);
+    color: var(--foreground);
   }
 }
 
-.tooltip {
-  @include surface-elevated;
-  padding: 0.75rem;
-  min-width: 120px;
-}
+.btnActive {
+  background-color: var(--green-500);
+  color: var(--dark-900);
+  font-weight: 600;
 
-.tooltipRow {
-  @include flex-between;
-  gap: 1rem;
-
-  & > span {
-    @apply text-text-secondary text-xs;
-    @include text-mono;
-  }
-
-  & > span:last-child {
-    @apply text-text-primary;
+  &:hover {
+    background-color: var(--green-500);
+    color: var(--dark-900);
   }
 }
 
-.tooltipUp {
-  @apply text-accent-green;
-}
-
-.tooltipDown {
-  @apply text-accent-red;
+.chart {
+  width: 100%;
+  min-height: 200px;
 }
