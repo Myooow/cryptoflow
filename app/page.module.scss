@@ -2,17 +2,44 @@
 @use "@/styles/variables" as *;
 
 .page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   width: 100%;
 }
 
-.grid {
+.topGrid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
 
   @include respond-to("lg") {
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
   }
+
+  @include respond-to("xl") {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.overviewCol {
+  width: 100%;
+}
+
+.trendingCol {
+  width: 100%;
+}
+
+.bottomRow {
+  width: 100%;
+}
+
+.overviewSkeleton {
+  background-color: var(--dark-500);
+  border-radius: $border-radius-xl;
+  height: 480px;
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
 .trendingCard {
@@ -60,8 +87,10 @@
   &:last-child { padding-right: 20px; }
 }
 
-.skeleton {
-  animation: pulse 1.5s ease-in-out infinite;
+.errorMsg {
+  padding: 24px 20px;
+  color: var(--red-500);
+  font-size: 14px;
 }
 
 .skeletonTitle {
@@ -70,12 +99,14 @@
   background-color: var(--dark-400);
   border-radius: $border-radius-sm;
   margin: 0 20px 20px;
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
 .skeletonRow {
   height: 52px;
   border-bottom: 1px solid rgba($color-purple-600, 0.1);
   background-color: rgba($color-dark-400, 0.3);
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
 @keyframes pulse {
