@@ -1,73 +1,68 @@
-@use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
+@use "@/styles/variables" as *;
 
-@reference "../../../app/globals.scss";
-
-.card {
-  @include surface-card;
-  display: flex;
-  flex-direction: column;
-  gap: 0.875rem;
-  padding: 1.25rem;
-  text-decoration: none;
-  transition: border-color $transition-fast, transform $transition-fast;
+.row {
+  border-bottom: 1px solid rgba($color-purple-600, 0.1);
+  transition: background-color $transition-fast;
 
   &:hover {
-    @apply border-border;
-    transform: translateY(-2px);
+    background-color: rgba($color-dark-400, 0.3);
+  }
+
+  &:last-child {
+    border-bottom: none;
   }
 }
 
-.top {
-  @include flex-between;
+.nameCell {
+  padding: 16px 0 16px 20px;
+  font-weight: 700;
+  color: var(--foreground);
 }
 
-.coins {
+.gainersCell {
+  padding: 8px 20px 8px 0;
+}
+
+.gainers {
   display: flex;
-  align-items: center;
-
-  & > * {
-    margin-left: -8px;
-    border-radius: 50%;
-    border: 2px solid var(--color-surface);
-
-    &:first-child {
-      margin-left: 0;
-    }
-  }
+  gap: 4px;
 }
 
-.coin {
+.coinImage {
   border-radius: 50%;
+  width: 28px;
+  height: 28px;
+}
+
+.changeCell {
+  padding: 8px;
+  font-weight: 500;
 }
 
 .change {
-  @apply text-xs font-semibold;
-  @include text-mono;
-  padding: 0.2rem 0.5rem;
-  border-radius: $border-radius-sm;
-
-  &.up {
-    @apply text-accent-green bg-accent-green-dim;
-  }
-
-  &.down {
-    @apply text-accent-red bg-accent-red-dim;
-  }
-}
-
-.bottom {
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
 }
 
-.name {
-  @apply text-text-primary text-sm font-medium;
-  @include truncate;
+.up {
+  color: var(--green-500);
 }
 
-.marketCap {
-  @apply text-text-secondary text-xs;
-  @include text-mono;
+.down {
+  color: var(--red-500);
+}
+
+.marketCapCell {
+  padding: 8px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.volumeCell {
+  padding: 8px 20px 8px 8px;
+  font-weight: 500;
+  font-size: 13px;
 }

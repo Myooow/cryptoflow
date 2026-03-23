@@ -15,19 +15,21 @@
 }
 
 @mixin flex-center {
-  @apply flex items-center justify-center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @mixin flex-between {
-  @apply flex items-center justify-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 @mixin surface-card {
-  @apply bg-surface border border-border-subtle rounded-lg;
-}
-
-@mixin surface-elevated {
-  @apply bg-surface-elevated border border-border rounded-lg;
+  background-color: var(--dark-500);
+  border: 1px solid rgba($color-purple-600, 0.3);
+  border-radius: $border-radius-lg;
 }
 
 @mixin text-mono {
@@ -36,20 +38,33 @@
 }
 
 @mixin price-up {
-  @apply text-accent-green;
+  color: var(--green-500);
 }
 
 @mixin price-down {
-  @apply text-accent-red;
+  color: var(--red-500);
 }
 
 @mixin truncate {
-  @apply overflow-hidden text-ellipsis whitespace-nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @mixin glass-effect {
-  background: rgba($color-surface, 0.8);
+  background: rgba($color-dark-500, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba($color-border, 0.5);
+  border: 1px solid rgba($color-purple-600, 0.5);
+}
+
+@mixin skeleton {
+  background-color: rgba($color-dark-400, 0.6);
+  border-radius: $border-radius-sm;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }

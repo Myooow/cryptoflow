@@ -19,7 +19,8 @@ export function formatLargeNumber(value: number): string {
   return `$${value.toFixed(2)}`;
 }
 
-export function formatPercent(value: number): string {
+export function formatPercent(value: number | null | undefined): string {
+  if (value == null) return "—";
   const sign = value >= 0 ? "+" : "";
   return `${sign}${value.toFixed(2)}%`;
 }

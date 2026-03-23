@@ -1,96 +1,77 @@
-@use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
+@use "@/styles/variables" as *;
 
-@reference "../../globals.scss";
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.header {
-  @include flex-between;
-}
-
-.identity {
-  @include flex-center;
-  gap: 0.875rem;
-}
-
-.image {
-  @apply bg-surface-elevated;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  animation: shimmer 1.5s ease-in-out infinite;
-}
-
-.names {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-}
-
-.skeletonName {
-  @apply bg-surface-elevated;
-  height: 28px;
-  width: 160px;
-  border-radius: $border-radius-md;
-  animation: shimmer 1.5s ease-in-out infinite;
-}
-
-.skeletonSymbol {
-  @apply bg-surface-elevated;
-  height: 16px;
-  width: 60px;
-  border-radius: $border-radius-sm;
-  animation: shimmer 1.5s ease-in-out infinite;
-}
-
-.skeletonPrice {
-  @apply bg-surface-elevated;
-  height: 40px;
-  width: 200px;
-  border-radius: $border-radius-md;
-  animation: shimmer 1.5s ease-in-out infinite;
-}
-
-.layout {
+.page {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 32px;
+  width: 100%;
+  animation: pulse 1.5s ease-in-out infinite;
 
-  @include respond-to("xl") {
-    grid-template-columns: 1fr 320px;
+  @include respond-to("lg") {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
   }
 }
 
-.main {
+.primary {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 20px;
 }
 
-.skeletonChart {
-  @include surface-card;
-  height: 420px;
-  animation: shimmer 1.5s ease-in-out infinite;
+.tokenName {
+  height: 32px;
+  width: 200px;
+  background-color: var(--dark-400);
+  border-radius: $border-radius-sm;
 }
 
-.skeletonStats {
-  @include surface-card;
-  height: 200px;
-  animation: shimmer 1.5s ease-in-out infinite;
+.coinInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-.skeletonSidebar {
-  @include surface-card;
-  height: 600px;
-  animation: shimmer 1.5s ease-in-out infinite;
+.image {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background-color: var(--dark-400);
+  flex-shrink: 0;
 }
 
-@keyframes shimmer {
+.price {
+  height: 56px;
+  width: 220px;
+  background-color: var(--dark-400);
+  border-radius: $border-radius-md;
+}
+
+.chart {
+  height: 400px;
+  background-color: var(--dark-500);
+  border-radius: $border-radius-lg;
+}
+
+.secondary {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: $border-radius-lg;
+}
+
+.detailItem {
+  height: 72px;
+  background-color: var(--dark-500);
+  border-bottom: 1px solid rgba($color-purple-600, 0.1);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+@keyframes pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.5; }
 }

@@ -1,47 +1,35 @@
-import Link from "next/link";
 import Image from "next/image";
-import { formatPrice, formatPercent } from "@/lib/utils";
+import Link from "next/link";
+import { formatPercent, formatPrice } from "@/lib/utils";
 import type { TrendingToken } from "@/types/token";
 import styles from "./TrendingCard.module.scss";
+import { TrendingUp, TrendingDown } from "lucide-react";
 
 interface TrendingCardProps {
   token: TrendingToken;
-  rank: number;
 }
 
-export function TrendingCard({ token, rank }: TrendingCardProps) {
-  const isUp = token.data.priceChangePercentage24h >= 0;
+export function TrendingCard({ token }: TrendingCardProps) {
+  const change = token.data.priceChangePercentage24h;
+  const isUp = change >= 0;
 
   return (
-    <Link href={`/token/${token.id}`} className={styles.card}>
-      <div className={styles.header}>
-        <span className={styles.rank}>#{rank}</span>
-        <div className={styles.meta}>
-          <Image src={token.thumb} alt={token.name} width={32} height={32} className={styles.image} />
-          <div className={styles.names}>
-            <span className={styles.name}>{token.name}</span>
-            <span className={styles.symbol}>{token.symbol.toUpperCase()}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.footer}>
-        <span className={styles.price}>${formatPrice(token.data.price)}</span>
+    <tr className={styles.row}>
+      <td className={styles.nameCell}>
+        <Link href={`/token/${token.id}`} className={styles.nameLink}>
+          <Image src={token.small} alt={token.name} width={36} height={36} className={styles.image} />
+          <span className={styles.name}>{token.name}</span>
+        </Link>
+      </td>
+      <td className={styles.changeCell}>
         <span className={`${styles.change} ${isUp ? styles.up : styles.down}`}>
-          {isUp ? "▲" : "▼"} {Math.abs(token.data.priceChangePercentage24h).toFixed(2)}%
+          {isUp ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+          {formatPercent(change)}
         </span>
-      </div>
-
-      {token.data.sparkline && (
-        <Image
-          src={token.data.sparkline}
-          alt="sparkline"
-          width={200}
-          height={50}
-          className={styles.sparkline}
-          unoptimized
-        />
-      )}
-    </Link>
+      </td>
+      <td className={styles.priceCell}>
+        ${formatPrice(token.data.price)}
+      </td>
+    </tr>
   );
 }

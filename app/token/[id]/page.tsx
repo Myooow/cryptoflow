@@ -3,10 +3,10 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getTokenDetail, getOhlc } from "@/lib/api/coingecko";
 import { isSupportedOnBinance } from "@/lib/api/mapper";
-import { PriceTicker } from "@/components/shared/PriceTicker";
-import { CandlestickChart } from "@/components/shared/CandlestickChart";
-import { LiveTrades } from "@/components/shared/LiveTrades";
-import { TokenStats } from "@/components/shared/TokenStats";
+import { PriceTicker } from "@/components/shared/PriceTicker/PriceTicker";
+import { CandlestickChart } from "@/components/shared/CandlestickChart/CandlestickChart";
+import { LiveTrades } from "@/components/shared/LiveTrades/LiveTrades";
+import { TokenStats } from "@/components/shared/TokenStats/TokenStats";
 import styles from "./page.module.scss";
 
 interface TokenPageProps {
@@ -37,58 +37,88 @@ export default async function TokenPage({ params }: TokenPageProps) {
   let token;
   try {
     token = await getTokenDetail(id);
-  } catch {
-    notFound();
+  } catch (err) {
+    const status = (err as Error & { status?: number }).status;
+    if (status === 404) notFound();
+    throw err;
   }
 
-  const candles = await getOhlc(id, 7).catch(() => []);
+  const [candles] = await Promise.all([
+    getOhlc(id, 1).catch(() => []),
+  ]);
+
   const hasLiveData = isSupportedOnBinance(id);
 
   return (
     <div className={styles.page}>
-      <div className={styles.header}>
-        <div className={styles.tokenIdentity}>
-          {token.image && (
-            <Image
-              src={token.image}
-              alt={token.name}
-              width={48}
-              height={48}
-              className={styles.tokenImage}
-            />
-          )}
-          <div className={styles.tokenNames}>
-            <h1 className={styles.tokenName}>{token.name}</h1>
-            <span className={styles.tokenSymbol}>{token.symbol.toUpperCase()}</span>
+      <div className={styles.primary}>
+        <h3 className={styles.tokenName}>{token.name}</h3>
+
+        <div className={styles.coinInfo}>
+          <Image src={token.image} alt={token.name} width={75} height={75} className={styles.tokenImage} />
+          <div className={styles.priceRow}>
+            <Suspense fallback={<div className={styles.priceSkeleton} />}>
+              <PriceTicker coingeckoId={id} fallbackPrice={token.currentPrice} />
+            </Suspense>
           </div>
         </div>
 
-        <Suspense fallback={<div className={styles.priceSkeleton} />}>
-          <PriceTicker coingeckoId={id} fallbackPrice={token.currentPrice} />
-        </Suspense>
-      </div>
+        <CandlestickChart coingeckoId={id} initialCandles={candles} />
 
-      <div className={styles.layout}>
-        <div className={styles.main}>
-          <CandlestickChart coingeckoId={id} initialCandles={candles} />
-          <TokenStats token={token} />
+        {hasLiveData && <LiveTrades coingeckoId={id} />}
 
-          {token.description && (
-            <div className={styles.description}>
-              <h2 className={styles.descriptionTitle}>About {token.name}</h2>
-              <p
-                className={styles.descriptionText}
-                dangerouslySetInnerHTML={{ __html: sanitizeDescription(token.description) }}
-              />
-            </div>
-          )}
-        </div>
+        <TokenStats token={token} />
 
-        {hasLiveData && (
-          <div className={styles.sidebar}>
-            <LiveTrades coingeckoId={id} />
+        {token.description && (
+          <div className={styles.description}>
+            <h2 className={styles.descriptionTitle}>About {token.name}</h2>
+            <p
+              className={styles.descriptionText}
+              dangerouslySetInnerHTML={{ __html: sanitizeDescription(token.description) }}
+            />
           </div>
         )}
+      </div>
+
+      <div className={styles.secondary}>
+        <div className={styles.detailsGrid}>
+          <ul className={styles.detailsList}>
+            {token.links.homepage[0] && (
+              <li className={styles.detailItem}>
+                <span className={styles.detailLabel}>Website</span>
+                <a href={token.links.homepage[0]} target="_blank" rel="noopener noreferrer" className={styles.detailLink}>
+                  {new URL(token.links.homepage[0]).hostname}
+                </a>
+              </li>
+            )}
+            {token.links.twitterScreenName && (
+              <li className={styles.detailItem}>
+                <span className={styles.detailLabel}>Twitter</span>
+                <a href={`https://twitter.com/${token.links.twitterScreenName}`} target="_blank" rel="noopener noreferrer" className={styles.detailLink}>
+                  @{token.links.twitterScreenName}
+                </a>
+              </li>
+            )}
+            {token.links.subredditUrl && (
+              <li className={styles.detailItem}>
+                <span className={styles.detailLabel}>Reddit</span>
+                <a href={token.links.subredditUrl} target="_blank" rel="noopener noreferrer" className={styles.detailLink}>
+                  {token.links.subredditUrl.split("/r/")[1]?.replace("/", "")}
+                </a>
+              </li>
+            )}
+            {token.genesisDate && (
+              <li className={styles.detailItem}>
+                <span className={styles.detailLabel}>Genesis Date</span>
+                <span className={styles.detailValue}>{token.genesisDate}</span>
+              </li>
+            )}
+            <li className={styles.detailItem}>
+              <span className={styles.detailLabel}>Watchlist Users</span>
+              <span className={styles.detailValue}>{token.watchlistPortfolioUsers.toLocaleString()}</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );

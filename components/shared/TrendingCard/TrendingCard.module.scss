@@ -1,85 +1,73 @@
-@use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
+@use "@/styles/variables" as *;
 
-@reference "../../../app/globals.scss";
-
-.card {
-  @include surface-card;
-  @include flex-between;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1.25rem;
-  text-decoration: none;
-  transition: border-color $transition-fast, transform $transition-fast;
-  cursor: pointer;
+.row {
+  border-bottom: 1px solid rgba($color-purple-600, 0.1);
+  transition: background-color $transition-fast;
 
   &:hover {
-    @apply border-border;
-    transform: translateY(-2px);
+    background-color: rgba($color-dark-400, 0.3);
+  }
+
+  &:last-child {
+    border-bottom: none;
   }
 }
 
-.header {
-  @include flex-between;
-  width: 100%;
+.nameCell {
+  padding: 8px 0 8px 20px;
+  font-weight: 700;
 }
 
-.rank {
-  @apply text-text-muted text-xs font-medium;
-  @include text-mono;
-}
-
-.meta {
-  @include flex-center;
-  gap: 0.625rem;
+.nameLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--foreground);
 }
 
 .image {
   border-radius: 50%;
-}
-
-.names {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
 }
 
 .name {
-  @apply text-text-primary text-sm font-medium;
-  @include truncate;
-  max-width: 100px;
+  font-size: 14px;
+
+  @include respond-to("md") {
+    font-size: 15px;
+  }
 }
 
-.symbol {
-  @apply text-text-secondary text-xs;
-  @include text-mono;
-}
-
-.footer {
-  @include flex-between;
-  width: 100%;
-}
-
-.price {
-  @apply text-text-primary text-sm font-semibold;
-  @include text-mono;
+.changeCell {
+  padding: 16px 12px;
+  font-weight: 500;
 }
 
 .change {
-  @apply text-xs font-medium;
-  @include text-mono;
-
-  &.up {
-    @apply text-accent-green;
-  }
-
-  &.down {
-    @apply text-accent-red;
-  }
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
 }
 
-.sparkline {
-  width: 100%;
-  height: auto;
-  opacity: 0.7;
+.up {
+  color: var(--green-500);
+}
+
+.down {
+  color: var(--red-500);
+}
+
+.priceCell {
+  padding: 0 20px 0 0;
+  font-weight: 700;
+  font-size: 13px;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

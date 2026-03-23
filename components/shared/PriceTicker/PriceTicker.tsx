@@ -2,6 +2,7 @@
 
 import { useBinanceTicker } from "@/hooks/useBinanceStream";
 import { isSupportedOnBinance } from "@/lib/api/mapper";
+import { TrendingUp, TrendingDown } from "lucide-react";
 import styles from "./PriceTicker.module.scss";
 
 interface PriceTickerProps {
@@ -15,20 +16,19 @@ export function PriceTicker({ coingeckoId, fallbackPrice }: PriceTickerProps) {
 
   const price = ticker?.price ?? fallbackPrice;
   const change = ticker?.priceChangePercent ?? null;
-  const isUp = change !== null && change >= 0;
+  const isUp = change === null || change >= 0;
 
   return (
     <div className={styles.wrapper}>
-      <span className={styles.price}>
+      <h1 className={styles.price}>
         ${price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 8 })}
-      </span>
-
+      </h1>
       {change !== null && (
-        <span className={`${styles.change} ${isUp ? styles.up : styles.down}`}>
-          {isUp ? "▲" : "▼"} {Math.abs(change).toFixed(2)}%
+        <span className={`${styles.badge} ${isUp ? styles.up : styles.down}`}>
+          {isUp ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+          {Math.abs(change).toFixed(2)}%
         </span>
       )}
-
       {supported && (
         <span className={`${styles.dot} ${styles[status]}`} title={status} />
       )}

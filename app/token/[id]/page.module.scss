@@ -1,95 +1,136 @@
-@use "@/styles/variables" as *;
 @use "@/styles/mixins" as *;
-
-@reference "../../globals.scss";
+@use "@/styles/variables" as *;
 
 .page {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.header {
-  @include flex-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.tokenIdentity {
-  @include flex-center;
-  gap: 0.875rem;
-}
-
-.tokenImage {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-}
-
-.tokenNames {
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-}
-
-.tokenName {
-  @apply text-text-primary text-2xl font-bold;
-}
-
-.tokenSymbol {
-  @apply text-text-secondary text-sm;
-  @include text-mono;
-}
-
-.priceSkeleton {
-  @apply bg-surface-elevated;
-  height: 40px;
-  width: 200px;
-  border-radius: $border-radius-md;
-  animation: shimmer 1.5s ease-in-out infinite;
-}
-
-.layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
-  align-items: start;
+  gap: 32px;
+  width: 100%;
 
-  @include respond-to("xl") {
-    grid-template-columns: 1fr 320px;
+  @include respond-to("lg") {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
   }
 }
 
-.main {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.primary {
+  width: 100%;
 }
 
-.sidebar {
-  height: 600px;
-  position: sticky;
-  top: calc(56px + 2rem);
+.tokenName {
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.coinInfo {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tokenImage {
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+  flex-shrink: 0;
+}
+
+.priceRow {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.priceSkeleton {
+  height: 56px;
+  width: 200px;
+  background-color: var(--dark-400);
+  border-radius: $border-radius-md;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.secondary {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.detailsGrid {
+  margin-top: 8px;
+}
+
+.detailsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.detailItem {
+  background-color: var(--dark-500);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid rgba($color-purple-600, 0.1);
+
+  &:first-child {
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+  }
+
+  &:last-child {
+    border-bottom: none;
+    border-radius: 0 0 $border-radius-lg $border-radius-lg;
+  }
+}
+
+.detailLabel {
+  font-size: 13px;
+  color: var(--purple-100);
+}
+
+.detailLink {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--green-500);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.detailValue {
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .description {
-  @include surface-card;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  margin-top: 32px;
 }
 
 .descriptionTitle {
-  @apply text-text-primary text-base font-semibold;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+
+  @include respond-to("md") {
+    font-size: 24px;
+  }
 }
 
 .descriptionText {
-  @apply text-text-secondary text-sm;
+  font-size: 14px;
   line-height: 1.7;
+  color: var(--purple-100);
 
-  & a {
-    @apply text-accent-blue;
+  a {
+    color: var(--green-500);
     text-decoration: none;
 
     &:hover {
@@ -98,7 +139,7 @@
   }
 }
 
-@keyframes shimmer {
+@keyframes pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.5; }
 }
